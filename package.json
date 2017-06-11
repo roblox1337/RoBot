@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "discord.js": "^11.1.0"
+  },
+  "name": "RoBot",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/evaera/RoVer",
+  "author": "evaera",
+  "license": "Apache-2.0",
+  "description": "RoVer Bot",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
