@@ -54,15 +54,15 @@ You can also clone this repository and host it yourself and make any modificatio
 After you add the bot to your server, you can customize RoVer with the following commands. You must have the `Administrator` permission in the Discord server in order to use these commands.
 
 - `!RoVer` - Displays a list of commands
-- `!VerifiedRole <exact role name>` - Set the role that verified members will get. Default `null`.
-- `!Nickname <true|false>` - Set whether or not new users will be nicknamed to their Roblox name. Default `true`.
-- `!AnnounceChannel <exact channel name>` - Set a channel that the bot will post a message to every time someone verifies. Default `null`.
-- `!NicknameFormat <format>` - Set the nickname format, so you could have the nickname include their roblox id or discord name, for example. Available replacements are Available replacements are `%USERNAME%`, `%USERID%`, `%DISCORDNAME%`, and `%DISCORDID%`. Example: `%USERNAME% - (%USERID%)`. Default `%USERNAME%`.
-- `!WelcomeMessage <welcome message>` - Set the message the user gets when they verify. Will be sent in DMs unless they use `!verify` command. Available replacements are Available replacements are `%USERNAME%`, `%USERID%`, `%DISCORDNAME%`, and `%DISCORDID%`. Default: `Welcome to the server, %USERNAME%!`. 
-- `!BindGroupRank <roblox group id> <Discord Role> <((>|<|)group rank|\"all\")>` - See section below.
-- `!UnbindGroupRank <role name>` - See section below.
-- `!UnbindAllGroupRanks` - See section below.
-- `!Update <@user>` - Forcibly update verification status of a user, same as them running `!verify`. Make sure you @mention the user.
+- `!RoVerVerifiedRole <exact role name>` - Set the role that verified members will get. Default `null`.
+- `!RoVerNickname <true|false>` - Set whether or not new users will be nicknamed to their Roblox name. Default `true`.
+- `!RoVerAnnounceChannel <exact channel name>` - Set a channel that the bot will post a message to every time someone verifies. Default `null`.
+- `!RoVerNicknameFormat <format>` - Set the nickname format, so you could have the nickname include their roblox id or discord name, for example. Available replacements are Available replacements are `%USERNAME%`, `%USERID%`, `%DISCORDNAME%`, and `%DISCORDID%`. Example: `%USERNAME% - (%USERID%)`. Default `%USERNAME%`.
+- `!RoVerWelcomeMessage <welcome message>` - Set the message the user gets when they verify. Will be sent in DMs unless they use `!verify` command. Available replacements are Available replacements are `%USERNAME%`, `%USERID%`, `%DISCORDNAME%`, and `%DISCORDID%`. Default: `Welcome to the server, %USERNAME%!`. 
+- `!RoVerBindGroupRank <groupid:rank number:role name|groupid:role name>` - See section below.
+- `!RoVerUnbindGroupRank <role name>` - See section below.
+- `!RoVerUnbindAllGroupRanks` - See section below.
+- `!RoVerUpdate <@user>` - Forcibly update verification status of a user, same as them running `!verify`. Make sure you @mention the user.
 
 You can run these commands without arguments to set them back to their default state.
 
@@ -74,27 +74,27 @@ You should probably make a read-only channel in the server explaining these proc
 
 - Use the following command to set up giving a role to all members of a group:
 
-  `!BindGroupRank 372 GroupMember` where `372` is your *group id* and `GroupMember` is the *Discord role name*
+  `!RoVerBindGroupRank 372:Group member` where `372` is your *group id* and `Group member` is the *Discord role name*
 
 - Use the following command to set up giving a role to members of a certain rank in a group:
 
-  `!BindGroupRank 372 GroupOwner 255` where `372` is your *group id*, `255` is the *group roleset rank* (the number on the configure page, not the role name) and `GroupOwner` is the *Discord role name*
+  `!RoVerBindGroupRank 372:255:Group owner` where `372` is your *group id*, `255` is the *group roleset rank* (the number on the configure page, not the role name) and `Group owner` is the *Discord role name*
 
 - Use the following command to set up giving a role to members of a **rank or higher** in a group: (*Note! This uses a "greater than or equal to" comparison*)
 
-  `!BindGroupRank 372 GroupAdmin >200` where `372` is your *group id*, `200` is the *group roleset rank* (the number on the configure page, not the role name) and `GroupAdmin` is the *Discord role name*
+  `!RoVerBindGroupRank 372:>200:Group owner` where `372` is your *group id*, `200` is the *group roleset rank* (the number on the configure page, not the role name) and `Group owner` is the *Discord role name*
 
 - Use the following command to set up giving a role to members lower than a rank in a group: (*Note! This uses a "less than" comparison*)
 
-  `!BindGroupRank 372 GroupNormie <200` where `372` is your *group id*, `200` is the *group roleset rank* (the number on the configure page, not the role name) and `GroupNormie` is the *Discord role name*
+  `!RoVerBindGroupRank 372:<200:Group owner` where `372` is your *group id*, `200` is the *group roleset rank* (the number on the configure page, not the role name) and `Group owner` is the *Discord role name*
 
 - Use the following command to unbind a role from a group:
 
-  `!UnbindGroupRank GroupMember` where `GroupMember` is the *Discord role name*
+  `!RoVerUnbindGroupRank Group member` where `Group member` is the *Discord role name*
 
 - Use the following command to unbind all roles from groups in your server:
 
-  `!UnbindAllGroupRanks`
+  `!RoVerUnbindAllGroupRanks`
 
 ### Virtual groups
 
@@ -102,9 +102,9 @@ Virtual groups are a way to bind ranks using the group rank binding system for e
 
 - `DevForum`
 
-To create a role for all members of the dev forum in your server, use the following command:
+To create a role for all members of the dev forum min your server, use the following command:
 
-`!RoVerBindGroupRank DevForum DevForumMember`, where `DevForum` is the *Virtual Group* and `DevForum Member` is the *Discord role name*
+`!RoVerBindGroupRank DevForum:DevForum Member`, where `DevForum` is the *Virtual Group* and `DevForum Member` is the *Discord role name*
 
 # Self-hosting instructions
 
@@ -112,34 +112,9 @@ To create a role for all members of the dev forum in your server, use the follow
 2. **Node.js version 7.8.0 or higher is required to run RoVer.**
 3. Install yarn if you don't already have it: `npm install -g yarn`
 4. Use yarn to install the dependencies: `yarn install`
-5. Edit the file `src/data/client.json` and insert your [bot token](https://discordapp.com/developers/applications/me).
+5. Edit the file `src/data/client.json` and insert your bot token.
 6. Start the bot: `node ./src/index.js`
 7. You should set up a process manager like [PM2](http://pm2.keymetrics.io/) or forever.js to ensure that the bot remains online.
-
-### Update Server
-
-The *Update Server* is an optional part of RoVer that can be enabled in `client.json`. It is an HTTP server that can listen for requests and globally update a member in all guilds that the bot is in, similar to if they ran `!verify` in every guild. This is used internally on the hosted version for when the user verifies on verify.eryn.io, but you could use it for whatever purpose you wish. 
-
-### client.json options
-
-```
-    "token"             : String. The bot token that is used to log in to your bot.
-    "lockNicknames"     : Boolean. Default false. If true, the bot will run DiscordServer.verifyMember every time
-                          they begin typing. This will quickly eat up API requests if you aren't careful. Mostly
-                          used on the hosted version.
-    "updateServer"      : {
-                          If this object is present, the update server will be started.
-                      
-        "port"          : Integer. The port the Update server runs on.
-        "apiKey"        : String. The API key the server checks against before updating the user.
-    }
-    "loud"              : Boolean. Default false. Logs every request made to stdout.
-    "totalShards"       : Integer. Default auto. The number of shards to launch.
-    "apiRequestMethod"  : String. Default 'sequential'. sequential' or 'burst'. Sequential executes all requests in the order 
-                          they are triggered, whereas burst runs multiple at a time, and doesn't guarantee a particular order.
-    "owner"             : String. Default "0". The Discord ID of the bot's owner.
-    "commandPrefix"     : String. Default "!". The prefix for commands. 
-```
 
 # To-do list and plans
 
